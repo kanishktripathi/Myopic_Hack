@@ -1,0 +1,3 @@
+/myo/orientation id X X X
+/myo/accel id X X X
+/myo/gyro id X X X
