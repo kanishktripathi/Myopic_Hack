@@ -30,9 +30,9 @@
 #X msg 342 351 send /gyro/3 \$1;
 #X msg 315 371 send /gyro/2 \$1;
 #X msg 288 391 send /gyro/1 \$1;
-#X msg 119 355 send /gyro/3 \$1;
-#X msg 92 375 send /gyro/2 \$1;
-#X msg 65 395 send /gyro/1 \$1;
+#X msg 119 355 send /orientation/3 \$1;
+#X msg 92 375 send /orientation/2 \$1;
+#X msg 65 395 send /orientation/1 \$1;
 #X connect 1 0 4 0;
 #X connect 2 0 1 0;
 #X connect 3 0 31 0;
