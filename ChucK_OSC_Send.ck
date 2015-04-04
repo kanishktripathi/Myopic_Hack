@@ -2,7 +2,7 @@
 
 // hostname and port
 "localhost" => string hostname;
-6449 => int port;
+5000 => int port;
 
 // get command line
 if( me.args() ) me.arg(0) => hostname;
