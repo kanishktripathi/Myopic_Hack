@@ -133,7 +133,40 @@
         }
     }
     
-   `
+   
+    
+   SndBuf fullmix  => dac;
+   SndBuf sound1 => Pan2 p1 => JCRev rev1 => dac;
+   SndBuf sound2 => Pan2 p2 => JCRev rev2 => dac;
+   SndBuf sound3 => Pan2 p3 => JCRev rev3 => dac;
+   SndBuf sound4 => Pan2 p4 => JCRev rev4 => dac;
+   SndBuf sound5 => Pan2 p5 => JCRev rev5 => dac;
+   SndBuf sound6 => Pan2 p6 => JCRev rev6 => dac;
+   SndBuf sound7 => dac;
+   SndBuf sound8 => dac;
+   SndBuf sound9 => dac;
+   SndBuf sound10 => dac;
+   
+    me.sourceDir() + "/Samples/FullMix.wav" => string filename;
+    me.sourceDir() + "/Samples/bluejay.wav" => string file1;
+    me.sourceDir() + "/Samples/cockatiel.wav" => string file2;
+    me.sourceDir() + "/Samples/pigeonfly.wav" => string file3;
+    me.sourceDir() + "/Samples/bsing1.wav" => string file4;
+    me.sourceDir() + "/Samples/bsing2.wav" => string file5;
+    me.sourceDir() + "/Samples/wind.wav" => string file6;
+    
+    filename => fullmix.read; 
+    file1 => sound1.read;
+    file2 => sound2.read;
+    file3 => sound3.read;
+    file4 => sound4.read;
+    file5 => sound5.read;
+    file6 => sound6.read;
+    
+    0 => fullmix.pos => sound1.pos => sound2.pos => sound3.pos => sound4.pos => sound5.pos => sound6.pos => sound7.pos => sound8.pos => sound9.pos => sound10.pos ;
+    0.5 => fullmix.gain;
+    0.1 => sound1.gain => sound2.gain => sound3.gain => sound4.gain => sound5.gain => sound6.gain => sound7.gain => sound8.gain => sound9.gain => sound10.gain;
+    0.1 => rev1.mix => rev2.mix => rev3.mix =>  rev4.mix => rev5.mix =>  rev6.mix; 
     spork~getS1Val(s1Thread);
     spork~getS2Val(s2Thread);
     spork~getS3Val(s3Thread);
@@ -144,33 +177,67 @@
     spork~getS8Val(s8Thread);
     spork~getS9Val(s9Thread);
     
-    FilteredInstrument fullmix;
-    
-    me.sourceDir() + "/Samples/FullMix.wav" => string filename;
-    fullmix.setSoundFile(filename);
-    fullmix.connect(dac);
-    
-    
-    
-    // the patch 
-    //SndBuf buf => dac;
-    // load the file
-    //filename => buf.read;
-    
-    fullmix.setPos(0);
-    
+
     // time loop
     while( true )
     {
-        //Math.random2f(.2,.5) => buf.gain;
-        fullmix.setGain(0.5);
-         => fullmix.setCenterFreq;
-        //<<<s1Val>>>;
-        1::second => now;
+        if(s4Val >0)
+        {
+            0 => sound1.pos;
+            Math.random2f(-1,1) => p1.pan;
+            Math.random2f(0.75,1.25) => sound1.rate;
+            Math.random2f(0,0.1) => sound1.gain;
+            Math.random2f(0,0.1) => rev1.mix;
+            5::second => now;
+        }
+        if(s5Val >0)
+        {
+            0 => sound2.pos;
+            Math.random2f(-1,1) => p2.pan;
+            Math.random2f(0.75,1.25) => sound2.rate;
+            Math.random2f(0.05,0.1) => sound2.gain;
+            Math.random2f(0,0.1) => rev2.mix;
+            3::second => now;
+        }
+        if(s6Val > 0)
+        {
+            0 => sound3.pos;
+            Math.random2f(-1,1) => p3.pan;
+            Math.random2f(0.75,1.25) => sound3.rate;
+            Math.random2f(0.05,0.1) => sound3.gain;
+            Math.random2f(0,0.1) => rev3.mix;
+            3::second => now;
+        }
+        if(s7Val > 0)
+        {
+            0 => sound4.pos;
+            Math.random2f(-1,1) => p4.pan;
+            Math.random2f(0.75,1.25) => sound4.rate;
+            Math.random2f(0.05,0.1) => sound4.gain;
+            Math.random2f(0,0.1) => rev4.mix;
+            3::second => now;
+        }
+        if(s8Val > 0)
+        {
+            0 => sound5.pos;
+            Math.random2f(-1,1) => p5.pan;
+            Math.random2f(0.75,1.25) => sound5.rate;
+            Math.random2f(0.05,0.1) => sound5.gain;
+            Math.random2f(0,0.1) => rev5.mix;
+            3::second => now;
+        }
+        if(s9Val > 0)
+        {
+            0 => sound6.pos;
+            Math.random2f(-1,1) => p6.pan;
+            Math.random2f(0.75,1.25) => sound6.rate;
+            Math.random2f(0.05,0.1) => sound6.gain;
+            Math.random2f(0,0.1) => rev6.mix;
+            3::second => now;
+
+        }
+        500::ms => now;
     }
     
     
-    
-    
-
 
